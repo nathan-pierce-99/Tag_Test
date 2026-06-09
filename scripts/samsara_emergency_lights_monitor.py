@@ -287,11 +287,13 @@ def reconcile_tag_membership(
     if should_be_tagged:
         updated_vehicle_ids = current_vehicle_ids + [vehicle_id]
         action = "add"
+        past_tense_action = "added"
     else:
         updated_vehicle_ids = [
             current_id for current_id in current_vehicle_ids if current_id != vehicle_id
         ]
         action = "remove"
+        past_tense_action = "removed"
 
     if not apply_changes:
         log(
@@ -307,9 +309,7 @@ def reconcile_tag_membership(
         vehicle_ids=updated_vehicle_ids,
         timeout=timeout,
     )
-    log(
-        f"Updated {tag_name!r}: {action}ed {vehicle_name} ({'id=' + vehicle_id})."
-    )
+    log(f"Updated {tag_name!r}: {past_tense_action} {vehicle_name} ({'id=' + vehicle_id}).")
 
 
 def run_once(
